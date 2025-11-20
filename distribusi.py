@@ -1,5 +1,6 @@
 import streamlit as st
-from streamlit_gsheets import GSheetsConnection
+#from streamlit_gsheets import GSheetsConnection
+from st_gsheets_connection import GSheetsConnection
 
 # URL lengkap Google Sheet publik Anda
 # Contoh: https://docs.google.com/spreadsheets/d/1BxiMVs0XRAmX6Z_GSSN_BVxN_L3e_s_a_T-F/edit?usp=sharing
@@ -26,3 +27,4 @@ try:
 except Exception as e:
 
     st.error(f"Gagal membaca data. Pastikan URL benar dan sheet benar-benar publik. Error: {e}")
+
