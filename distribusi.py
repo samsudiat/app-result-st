@@ -14,7 +14,7 @@ try:
     # Menggunakan URL sebagai sumber data.
     df = conn.read(
         spreadsheet=PUBLIC_SHEET_URL, 
-        worksheet="Sheet1", # Ganti dengan nama sheet Anda jika berbeda
+        worksheet="RESULT ST", # Ganti dengan nama sheet Anda jika berbeda
         ttl="5m" # Cache data selama 5 menit
     ) 
 
@@ -24,4 +24,5 @@ try:
     st.success(f"Berhasil membaca {len(df)} baris data.")
 
 except Exception as e:
+
     st.error(f"Gagal membaca data. Pastikan URL benar dan sheet benar-benar publik. Error: {e}")
