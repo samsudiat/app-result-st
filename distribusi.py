@@ -1,30 +1,23 @@
 import streamlit as st
-#from streamlit_gsheets import GSheetsConnection
-from st_gsheets_connection import GSheetsConnection
+import pandas as pd
 
-# URL lengkap Google Sheet publik Anda
-# Contoh: https://docs.google.com/spreadsheets/d/1BxiMVs0XRAmX6Z_GSSN_BVxN_L3e_s_a_T-F/edit?usp=sharing
-PUBLIC_SHEET_URL = "https://docs.google.com/spreadsheets/d/1M395nIYCKa3euENuHc6E8fUeg-8Jfe0i/edit?usp=sharing&ouid=107287618249371338490&rtpof=true&sd=true" 
+st.set_page_config(page_title="Google Sheets Loader Otomatis", layout="wide")
 
-st.title("Aplikasi Streamlit & Google Sheets Publik 🌐")
+st.title("📄 Google Sheets Loader (Otomatis)")
+st.write("Data diambil otomatis dari Google Sheets Anda tanpa tombol.")
 
-# Membuat objek koneksi. Karena ini publik, tidak ada parameter secrets yang akan dibaca.
-conn = st.connection("gsheets", type=GSheetsConnection)
+# Google Sheet Anda
+sheet_id = "1M395nIYCKa3euENuHc6E8fUeg-8Jfe0i"
+sheet_name = "RESULT ST"   # Ubah jika sheet name berbeda
 
+# URL CSV
+url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
+
+# Load otomatis
 try:
-    # Menggunakan URL sebagai sumber data.
-    df = conn.read(
-        spreadsheet=PUBLIC_SHEET_URL, 
-        worksheet="RESULT ST", # Ganti dengan nama sheet Anda jika berbeda
-        ttl="5m" # Cache data selama 5 menit
-    ) 
-
-    st.subheader("Data yang Dibaca dari Google Sheet Publik:")
-    st.dataframe(df)
-
-    st.success(f"Berhasil membaca {len(df)} baris data.")
-
+    df = pd.read_csv(url)
+    st.success("Data berhasil dimuat otomatis dari Google Sheets!")
+    st.dataframe(df, use_container_width=True)
 except Exception as e:
-
-    st.error(f"Gagal membaca data. Pastikan URL benar dan sheet benar-benar publik. Error: {e}")
-
+    st.error("Gagal memuat data otomatis.")
+    st.error(e)
